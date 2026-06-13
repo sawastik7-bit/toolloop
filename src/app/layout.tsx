@@ -4,6 +4,8 @@ import "@/app/globals.css";
 import ThemeToggle from "@/components/ThemeToggle";
 import TrackedLink from "@/components/TrackedLink";
 import styles from "./layout.module.css";
+import { Footer } from "@/components/Footer";
+import { ROUTES } from "@/lib/constants";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
@@ -65,7 +67,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
           <header className={styles.header}>
             <div className={styles.headerInner}>
               <TrackedLink
-                href="/"
+                href={ROUTES.HOME}
                 className={styles.logo}
                 aria-label="ToolLoop home"
                 label="logo"
@@ -78,7 +80,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
               </TrackedLink>
               <nav className={styles.nav} aria-label="Main navigation">
                 <TrackedLink
-                  href="/browse"
+                  href={ROUTES.BROWSE}
                   className={styles.navLink}
                   label="Browse"
                   location="header"
@@ -86,7 +88,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
                   Browse
                 </TrackedLink>
                 <TrackedLink
-                  href="/tools/new"
+                  href={ROUTES.LIST_NEW_TOOL}
                   className={styles.navLink}
                   label="List a tool"
                   location="header"
@@ -94,7 +96,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
                   List a tool
                 </TrackedLink>
                 <TrackedLink
-                  href="/saved"
+                  href={ROUTES.SAVED}
                   className={styles.navLink}
                   label="Saved"
                   location="header"
@@ -102,7 +104,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
                   Saved
                 </TrackedLink>
                 <TrackedLink
-                  href="/borrows"
+                  href={ROUTES.BORROWS}
                   className={styles.navLink}
                   label="Borrows"
                   location="header"
@@ -110,7 +112,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
                   Borrows
                 </TrackedLink>
                 <TrackedLink
-                  href="/dashboard"
+                  href={ROUTES.DASHBOARD}
                   className={styles.navLink}
                   label="Dashboard"
                   location="header"
@@ -126,11 +128,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
           <main id="main-content" className={styles.main}>
             {children}
           </main>
-          <footer>
-            <div>
-              <p>&copy; {new Date().getFullYear()} ToolLoop. All rights reserved.</p>
-            </div>
-          </footer>
+          <Footer />
         </div>
       </body>
     </html>
