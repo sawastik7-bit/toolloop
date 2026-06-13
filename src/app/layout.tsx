@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import "@/app/globals.css";
+import ThemeToggle from "@/components/ThemeToggle";
+import TrackedLink from "@/components/TrackedLink";
 import styles from "./layout.module.css";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
@@ -9,7 +11,25 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
     template: "%s - ToolLoop",
-    default: "ToolLoop - Borrow tools from your neighbors",
+    default: "ToolLoop - Borrow tools from neighbors",
+  },
+  description:
+    "Borrow tools from people nearby. A community tool-lending webapp for listing, browsing, requesting, and returning shared neighborhood tools.",
+  robots: { index: true, follow: true },
+  openGraph: {
+    type: "website",
+    siteName: "ToolLoop",
+    title: "ToolLoop - Borrow tools from neighbors",
+    description:
+      "Borrow tools from people nearby. A community tool-lending webapp for listing, browsing, requesting, and returning shared neighborhood tools.",
+    url: siteUrl,
+  },
+  icons: {
+    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
+    apple: "/favicon.svg",
+  },
+  alternates: {
+    canonical: siteUrl,
   },
 };
 
@@ -35,7 +55,7 @@ const jsonLd = {
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" data-theme="light">
+    <html lang="en" data-theme="dark">
       <body>
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
         <a href="#main-content" className={styles.skipLink}>
@@ -44,9 +64,63 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
         <div className={styles.shell}>
           <header className={styles.header}>
             <div className={styles.headerInner}>
-              <a href="/" className={styles.logo}>
-                ToolLoop
-              </a>
+              <TrackedLink
+                href="/"
+                className={styles.logo}
+                aria-label="ToolLoop home"
+                label="logo"
+                location="header"
+              >
+                <span className={styles.logoMark} aria-hidden="true">
+                  ⬡
+                </span>
+                <span className={styles.logoText}>ToolLoop</span>
+              </TrackedLink>
+              <nav className={styles.nav} aria-label="Main navigation">
+                <TrackedLink
+                  href="/browse"
+                  className={styles.navLink}
+                  label="Browse"
+                  location="header"
+                >
+                  Browse
+                </TrackedLink>
+                <TrackedLink
+                  href="/tools/new"
+                  className={styles.navLink}
+                  label="List a tool"
+                  location="header"
+                >
+                  List a tool
+                </TrackedLink>
+                <TrackedLink
+                  href="/saved"
+                  className={styles.navLink}
+                  label="Saved"
+                  location="header"
+                >
+                  Saved
+                </TrackedLink>
+                <TrackedLink
+                  href="/borrows"
+                  className={styles.navLink}
+                  label="Borrows"
+                  location="header"
+                >
+                  Borrows
+                </TrackedLink>
+                <TrackedLink
+                  href="/dashboard"
+                  className={styles.navLink}
+                  label="Dashboard"
+                  location="header"
+                >
+                  Dashboard
+                </TrackedLink>
+              </nav>
+              <div className={styles.headerActions}>
+                <ThemeToggle />
+              </div>
             </div>
           </header>
           <main id="main-content" className={styles.main}>
