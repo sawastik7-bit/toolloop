@@ -8,6 +8,6 @@ export default defineConfig({
     url: DB_URL,
   },
   migrations: {
-    seed: "tsx ./prisma/seed.ts",
+    seed: "tsx ./prisma/seed.mts",
   },
 });

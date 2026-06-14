@@ -4,6 +4,7 @@ import type { Category, Condition, RequestStatus } from "@prisma/client";
 export const ROUTES = {
   HOME: "/",
   BROWSE: "/browse",
+  TOOLS: "/tools",
   LIST_NEW_TOOL: "/tools/new",
   SAVED: "/saved",
   BORROWS: "/borrows",
