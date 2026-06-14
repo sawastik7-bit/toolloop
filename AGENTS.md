@@ -57,6 +57,7 @@ Reset to clean state: `npm run db:reset`
 
 ## Data models
 
+- `prisma/schema.prisma` -> defines the data model, including relations and constraints, this is the source of truth for the database schema
 - `User` -> owns `Tool`s, makes `BorrowRequest`s, has `Favorite`s
 - `Tool` -> has `BorrowRequest`s, has `Favorite`s, has `ToolReport`s
 - `BorrowRequest` -> status: `PENDING -> APPROVED / REJECTED -> RETURNED / CANCELLED`, has `RequestEvent`s

@@ -1,0 +1,86 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id           String          @id @default(uuid())
+  name         String
+  email        String          @unique
+  phone        String?
+  address      String?
+  neighborhood String
+  avatarColor  String
+  tools        Tool[]          @relation("OwnedTools")
+  requests     BorrowRequest[] @relation("MadeRequests")
+  favorites    Favorite[]
+}
+
+model Tool {
+  id           String          @id @default(uuid())
+  name         String
+  category     Category
+  description  String
+  condition    Condition
+  neighborhood String
+  rules        String
+  available    Boolean         @default(true)
+  ownerId      String
+  owner        User            @relation("OwnedTools", fields: [ownerId], references: [id])
+  requests     BorrowRequest[]
+  favoritedBy  Favorite[]
+  createdAt    DateTime        @default(now())
+}
+
+model Favorite {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  toolId    String
+  tool      Tool     @relation(fields: [toolId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@unique([userId, toolId])
+}
+
+model BorrowRequest {
+  id          String        @id @default(uuid())
+  toolId      String
+  tool        Tool          @relation(fields: [toolId], references: [id])
+  requesterId String
+  requester   User          @relation("MadeRequests", fields: [requesterId], references: [id])
+  status      RequestStatus @default(PENDING)
+  message     String?
+  returnOtp   String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+enum Category {
+  POWER_TOOLS
+  HAND_TOOLS
+  GARDEN
+  LADDERS
+  CLEANING
+  AUTOMOTIVE
+  OTHER
+}
+
+enum Condition {
+  NEW
+  LIKE_NEW
+  GOOD
+  FAIR
+  WELL_USED
+}
+
+enum RequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  RETURNED
+  CANCELLED
+}
